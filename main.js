@@ -27,29 +27,34 @@ const questions = [
   },
 ];
 
-async function initApp(client_key) {
-  await fetch(url, {
-    method: "POST",
-    body: JSON.stringify({ api_key: client_key }),
-    headers: {
-      "Content-type": "application/json",
-      Authorization: "Bearer " + client_key,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      company = data;
-      console.log(data);
+async function initApp(client_key, page) {
+  var arr = window.location.pathname.split("/");
+  var jobPage = arr[arr.length - 2] === page;
+
+  if (jobPage) {
+    await fetch(url, {
+      method: "POST",
+      body: JSON.stringify({ api_key: client_key }),
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + client_key,
+      },
     })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        company = data;
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-  if (!company.token) {
-    return;
+    if (!company.token) {
+      return;
+    }
+
+    constructor();
   }
-
-  constructor();
 }
 
 async function constructor() {
